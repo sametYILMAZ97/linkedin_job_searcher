@@ -16,43 +16,43 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
     - name: Run comprehensive test suite
       run: |
         echo "Running test_builder.py..."
         python test_builder.py || (echo "❌ test_builder.py failed" && exit 1)
         echo "✅ test_builder.py passed"
-        
+
         echo "Running test_new_features.py..."
         python test_new_features.py || (echo "❌ test_new_features.py failed" && exit 1)
         echo "✅ test_new_features.py passed"
-        
+
         echo "Running test_linkedin_format.py..."
         python test_linkedin_format.py || (echo "❌ test_linkedin_format.py failed" && exit 1)
         echo "✅ test_linkedin_format.py passed"
-        
+
         echo "Running test_turkey_geoid.py..."
         python test_turkey_geoid.py || (echo "❌ test_turkey_geoid.py failed" && exit 1)
         echo "✅ test_turkey_geoid.py passed"
-        
+
         echo "🎉 All test files passed successfully!"
-    
+
     - name: Test CLI functionality
       run: |
         echo "Testing CLI with basic parameters..."
         python cli.py "Test Job" --location "Test Location" --time "1 hour" --summary || (echo "❌ CLI test failed" && exit 1)
         echo "✅ CLI test passed"
-    
+
     - name: Test demo functionality
       run: |
         echo "Testing demo script..."

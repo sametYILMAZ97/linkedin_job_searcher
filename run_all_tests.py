@@ -11,16 +11,16 @@ def run_test(test_name, command):
     print(f"\n{'='*50}")
     print(f"[TEST] Running {test_name}...")
     print(f"{'='*50}")
-    
+
     try:
         result = subprocess.run(
-            command, 
-            capture_output=True, 
-            text=True, 
+            command,
+            capture_output=True,
+            text=True,
             shell=True,
             timeout=30
         )
-        
+
         if result.returncode == 0:
             print(f"[PASS] {test_name} PASSED")
             if result.stdout.strip():
@@ -32,7 +32,7 @@ def run_test(test_name, command):
             print("STDOUT:", result.stdout)
             print("STDERR:", result.stderr)
             return False
-            
+
     except subprocess.TimeoutExpired:
         print(f"[TIMEOUT] {test_name} TIMED OUT")
         return False
@@ -45,10 +45,10 @@ def main():
     """Run all tests."""
     print("[TEST] Running LinkedIn Job Searcher Test Suite")
     print("=" * 60)
-    
+
     # Python executable path
     python_exe = "C:/Users/monster/AppData/Local/Programs/Python/Python313/python.exe"
-    
+
     tests = [
         ("Core Functionality", f"{python_exe} test_builder.py"),
         ("New Features", f"{python_exe} test_new_features.py"),
@@ -57,18 +57,18 @@ def main():
         ("CLI Interface", f'{python_exe} cli.py "Test Job" --location "Test Location" --time "1 hour" --summary'),
         ("Demo Script", f"{python_exe} demo.py"),
     ]
-    
+
     passed = 0
     total = len(tests)
-    
+
     for test_name, command in tests:
         if run_test(test_name, command):
             passed += 1
-    
+
     print(f"\n{'='*60}")
     print(f"[RESULTS] TEST RESULTS: {passed}/{total} tests passed")
     print(f"{'='*60}")
-    
+
     if passed == total:
         print("[SUCCESS] ALL TESTS PASSED! CI/CD should work correctly.")
         sys.exit(0)
