@@ -26,10 +26,10 @@ A powerful, comprehensive tool designed to create optimized LinkedIn job search 
    ```bash
    # Option 1: Direct command (Ctrl+C works)
    python run_direct.py
-   
+
    # Option 2: Using main script
    python main.py --mode web
-   
+
    # Option 3: Double-click the batch file
    quick_start.bat
    ```
