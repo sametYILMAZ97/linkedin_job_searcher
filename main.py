@@ -2,8 +2,8 @@
 LinkedIn Job Searcher - Main Application Entry Point
 """
 
-import sys
 import argparse
+import sys
 from pathlib import Path
 
 # Add the project directory to Python path
@@ -36,8 +36,8 @@ def main():
         print(f"Open your browser to: http://localhost:{args.port}")
         print("Press Ctrl+C to stop the server")
 
-        import subprocess
         import os
+        import subprocess
 
         try:
             # Run Streamlit app

@@ -3,6 +3,7 @@ Streamlit Web Interface for LinkedIn Job Search URL Builder
 """
 
 import streamlit as st
+
 from linkedin_url_builder import LinkedInURLBuilder, create_optimized_url
 
 

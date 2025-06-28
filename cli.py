@@ -5,6 +5,7 @@ Command Line Interface for LinkedIn Job Search URL Builder
 import argparse
 import sys
 from typing import List
+
 from linkedin_url_builder import LinkedInURLBuilder
 
 
