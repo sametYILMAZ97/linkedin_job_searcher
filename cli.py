@@ -12,7 +12,7 @@ def parse_list_argument(value: str) -> List[str]:
     """Parse comma-separated list argument."""
     if not value:
         return []
-    return [item.strip() for item in value.split(',') if item.strip()]
+    return [item.strip() for item in value.split(",") if item.strip()]
 
 
 def main():
@@ -37,90 +37,83 @@ Job types:
 
 Remote options:
   on_site, remote, hybrid
-        """
+        """,
     )
 
     # Required arguments
     parser.add_argument(
-        'keywords',
-        help='Job keywords or title (e.g., "Python Developer")'
+        "keywords", help='Job keywords or title (e.g., "Python Developer")'
     )
 
     # Optional arguments
     parser.add_argument(
-        '--location', '-l',
-        default='',
-        help='Job location (e.g., "San Francisco", "Remote")'
+        "--location",
+        "-l",
+        default="",
+        help='Job location (e.g., "San Francisco", "Remote")',
     )
 
     parser.add_argument(
-        '--distance', '-d',
+        "--distance",
+        "-d",
         type=int,
         default=25,
-        help='Search radius in miles (default: 25)'
+        help="Search radius in miles (default: 25)",
     )
 
     parser.add_argument(
-        '--time', '-t',
-        default='24 hours',
-        help='Time filter (default: "24 hours")'
+        "--time", "-t", default="24 hours", help='Time filter (default: "24 hours")'
     )
 
     parser.add_argument(
-        '--custom-hours',
+        "--custom-hours",
         type=float,
-        help='Custom time filter in hours (overrides --time)'
+        help="Custom time filter in hours (overrides --time)",
     )
 
     parser.add_argument(
-        '--sort', '-s',
-        choices=['relevance', 'date_posted'],
-        default='date_posted',
-        help='Sort order (default: date_posted)'
+        "--sort",
+        "-s",
+        choices=["relevance", "date_posted"],
+        default="date_posted",
+        help="Sort order (default: date_posted)",
     )
 
     parser.add_argument(
-        '--experience', '-e',
+        "--experience",
+        "-e",
         type=parse_list_argument,
         default=[],
-        help='Experience levels (comma-separated)'
+        help="Experience levels (comma-separated)",
     )
 
     parser.add_argument(
-        '--job-types', '-j',
+        "--job-types",
+        "-j",
         type=parse_list_argument,
         default=[],
-        help='Job types (comma-separated)'
+        help="Job types (comma-separated)",
     )
 
     parser.add_argument(
-        '--remote', '-r',
+        "--remote",
+        "-r",
         type=parse_list_argument,
         default=[],
-        help='Remote work options (comma-separated)'
+        help="Remote work options (comma-separated)",
+    )
+
+    parser.add_argument("--geo-id", help="Geographic ID for precise location targeting")
+
+    parser.add_argument(
+        "--summary", action="store_true", help="Show parameters summary"
     )
 
     parser.add_argument(
-        '--geo-id',
-        help='Geographic ID for precise location targeting'
+        "--copy", action="store_true", help="Copy URL to clipboard (requires pyperclip)"
     )
 
-    parser.add_argument(
-        '--summary',
-        action='store_true',
-        help='Show parameters summary'
-    )
-
-    parser.add_argument(
-        '--copy',
-        action='store_true',
-        help='Copy URL to clipboard (requires pyperclip)'
-    )
-
-    parser.add_argument(
-        '--job-id',
-        help='Specific LinkedIn job ID to reference'
-    )
+    parser.add_argument("--job-id", help="Specific LinkedIn job ID to reference")
 
     args = parser.parse_args()
 
@@ -135,11 +128,12 @@ Remote options:
     try:
         builder = LinkedInURLBuilder()
 
-        url_builder = (builder
-                      .set_keywords(args.keywords)
-                      .set_location(args.location)
-                      .set_distance(args.distance)
-                      .set_sort_by(args.sort))
+        url_builder = (
+            builder.set_keywords(args.keywords)
+            .set_location_by_name(args.location)
+            .set_distance(args.distance)
+            .set_sort_by(args.sort)
+        )
 
         # Set time filter
         if args.custom_hours:
@@ -152,7 +146,7 @@ Remote options:
             url_builder.set_geo_id(args.geo_id)
 
         if args.job_id:
-            url_builder.params['currentJobId'] = args.job_id
+            url_builder.params["currentJobId"] = args.job_id
 
         if args.experience:
             url_builder.set_experience_level(args.experience)
@@ -180,10 +174,13 @@ Remote options:
         if args.copy:
             try:
                 import pyperclip
+
                 pyperclip.copy(final_url)
                 print("\n✓ URL copied to clipboard!")
             except ImportError:
-                print("\nNote: Install pyperclip to enable clipboard copying: pip install pyperclip")
+                print(
+                    "\nNote: Install pyperclip to enable clipboard copying: pip install pyperclip"
+                )
             except Exception as e:
                 print(f"\nWarning: Could not copy to clipboard: {e}")
 

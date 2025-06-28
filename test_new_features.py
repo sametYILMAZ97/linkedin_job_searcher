@@ -13,15 +13,16 @@ def test_new_features():
     builder = LinkedInURLBuilder()
 
     # Manually add job ID (like in the app)
-    builder.params['currentJobId'] = '4185657072'
+    builder.params["currentJobId"] = "4185657072"
 
-    url = (builder
-           .set_keywords("director sales operations")
-           .set_location("United States")
-           .set_distance(25)
-           .set_time_filter("1 hour")
-           .set_geo_id("103644278")
-           .build_url())
+    url = (
+        builder.set_keywords("director sales operations")
+        .set_location("United States")
+        .set_distance(25)
+        .set_time_filter("1 hour")
+        .set_geo_id("103644278")
+        .build_url()
+    )
 
     print("\nTest - URL with Job ID and Geo ID:")
     print(url)

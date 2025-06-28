@@ -11,12 +11,13 @@ def test_basic_functionality():
 
     # Test 1: Basic URL building
     builder = LinkedInURLBuilder()
-    url = (builder
-           .set_keywords("Python Developer")
-           .set_location("San Francisco")
-           .set_distance(25)
-           .set_time_filter("24 hours")
-           .build_url())
+    url = (
+        builder.set_keywords("Python Developer")
+        .set_location("San Francisco")
+        .set_distance(25)
+        .set_time_filter("24 hours")
+        .build_url()
+    )
 
     print("\nTest 1 - Basic URL:")
     print(url)
@@ -34,12 +35,13 @@ def test_basic_functionality():
 
     # Test 3: Advanced filters
     builder3 = LinkedInURLBuilder()
-    url3 = (builder3
-            .set_keywords("Data Scientist")
-            .set_experience_level(['mid_senior', 'director'])
-            .set_job_type(['full_time'])
-            .set_remote_options(['remote', 'hybrid'])
-            .build_url())
+    url3 = (
+        builder3.set_keywords("Data Scientist")
+        .set_experience_level(["mid_senior", "director"])
+        .set_job_type(["full_time"])
+        .set_remote_options(["remote", "hybrid"])
+        .build_url()
+    )
 
     print(f"\nTest 3 - Advanced filters:")
     print(url3)
@@ -47,11 +49,12 @@ def test_basic_functionality():
 
     # Test 4: Parameters summary
     builder4 = LinkedInURLBuilder()
-    (builder4
-     .set_keywords("Software Engineer")
-     .set_location("Remote")
-     .set_time_filter("4 hours")
-     .set_sort_by("date_posted"))
+    (
+        builder4.set_keywords("Software Engineer")
+        .set_location("Remote")
+        .set_time_filter("4 hours")
+        .set_sort_by("date_posted")
+    )
 
     summary = builder4.get_params_summary()
     print(f"\nTest 4 - Parameters summary:")
@@ -64,8 +67,8 @@ def test_basic_functionality():
         keywords="Machine Learning Engineer",
         location="Seattle",
         time_filter="8 hours",
-        experience_levels=['mid_senior'],
-        remote_options=['remote']
+        experience_levels=["mid_senior"],
+        remote_options=["remote"],
     )
 
     print(f"\nTest 5 - Helper function:")
