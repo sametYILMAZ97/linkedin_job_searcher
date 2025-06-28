@@ -24,9 +24,7 @@ def main():
         help="Run mode: web (Streamlit UI) or cli (command line)",
     )
 
-    parser.add_argument(
-        "--port", type=int, default=8501, help="Port for web interface (default: 8501)"
-    )
+    parser.add_argument("--port", type=int, default=8501, help="Port for web interface (default: 8501)")
 
     # Parse known args to allow forwarding unknown args to CLI
     args, unknown = parser.parse_known_args()
@@ -36,7 +34,6 @@ def main():
         print(f"Open your browser to: http://localhost:{args.port}")
         print("Press Ctrl+C to stop the server")
 
-        import os
         import subprocess
 
         try:

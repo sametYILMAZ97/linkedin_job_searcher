@@ -35,7 +35,7 @@ def test_basic_functionality():
         # Test 2: Time filter conversion
         builder2 = LinkedInURLBuilder()
         url2 = builder2.set_custom_time_hours(1.5).build_url()
-        print(f"\nTest 2 - Custom time filter (1.5 hours):")
+        print("\nTest 2 - Custom time filter (1.5 hours):")
         print(url2)
         assert "f_TPR=r5400" in url2  # 1.5 hours = 5400 seconds
         print("[PASS] Custom time filter works")

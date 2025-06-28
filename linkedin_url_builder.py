@@ -4,8 +4,7 @@ This application helps you create optimized LinkedIn job search URLs with advanc
 """
 
 import urllib.parse
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional
+from typing import Optional
 
 
 class LinkedInURLBuilder:
@@ -98,7 +97,7 @@ class LinkedInURLBuilder:
             self.params["sortBy"] = self.SORT_OPTIONS[sort_by]
         return self
 
-    def set_experience_level(self, levels: List[str]) -> "LinkedInURLBuilder":
+    def set_experience_level(self, levels: list[str]) -> "LinkedInURLBuilder":
         """Set experience level filters."""
         # Experience levels: 1=Internship, 2=Entry level, 3=Associate, 4=Mid-Senior level, 5=Director, 6=Executive
         level_map = {
@@ -111,16 +110,12 @@ class LinkedInURLBuilder:
         }
 
         if levels:
-            level_codes = [
-                level_map.get(level.lower())
-                for level in levels
-                if level.lower() in level_map
-            ]
+            level_codes = [level_map.get(level.lower()) for level in levels if level.lower() in level_map]
             if level_codes:
                 self.params["f_E"] = ",".join(level_codes)
         return self
 
-    def set_job_type(self, job_types: List[str]) -> "LinkedInURLBuilder":
+    def set_job_type(self, job_types: list[str]) -> "LinkedInURLBuilder":
         """Set job type filters."""
         # Job types: F=Full-time, P=Part-time, C=Contract, T=Temporary, I=Internship, V=Volunteer, O=Other
         type_map = {
@@ -134,37 +129,35 @@ class LinkedInURLBuilder:
         }
 
         if job_types:
-            type_codes = [
-                type_map.get(jt.lower()) for jt in job_types if jt.lower() in type_map
-            ]
+            type_codes = [type_map.get(jt.lower()) for jt in job_types if jt.lower() in type_map]
             if type_codes:
                 self.params["f_JT"] = ",".join(type_codes)
         return self
 
-    def set_remote_options(self, remote_types: List[str]) -> "LinkedInURLBuilder":
+    def set_remote_options(self, remote_types: list[str]) -> "LinkedInURLBuilder":
         """Set remote work options."""
         # Remote: 1=On-site, 2=Remote, 3=Hybrid
         remote_map = {"on_site": "1", "remote": "2", "hybrid": "3"}
 
         if remote_types:
-            remote_codes = [
-                remote_map.get(rt.lower())
-                for rt in remote_types
-                if rt.lower() in remote_map
-            ]
+            remote_codes = [remote_map.get(rt.lower()) for rt in remote_types if rt.lower() in remote_map]
             if remote_codes:
                 self.params["f_WT"] = ",".join(remote_codes)
         return self
 
-    def set_salary_range(
-        self, min_salary: Optional[int] = None, max_salary: Optional[int] = None
-    ) -> "LinkedInURLBuilder":
+    def set_salary_range(self, min_salary: Optional[int] = None, max_salary: Optional[int] = None) -> "LinkedInURLBuilder":
         """Set salary range filter."""
         if min_salary or max_salary:
             # LinkedIn uses salary base codes
             # This is a simplified version - LinkedIn's actual salary filtering is more complex
             if min_salary:
                 self.params["f_SB2"] = str(min_salary)
+        return self
+
+    def set_job_id(self, job_id: str) -> "LinkedInURLBuilder":
+        """Set current job ID for tracking purposes."""
+        if job_id:
+            self.params["currentJobId"] = job_id
         return self
 
     def build_url(self) -> str:
@@ -176,7 +169,7 @@ class LinkedInURLBuilder:
         query_string = urllib.parse.urlencode(self.params, quote_via=urllib.parse.quote)
         return f"{self.BASE_URL}?{query_string}"
 
-    def get_params_summary(self) -> Dict[str, str]:
+    def get_params_summary(self) -> dict[str, str]:
         """Get a human-readable summary of current parameters."""
         summary = {}
 
@@ -259,10 +252,10 @@ def create_optimized_url(
     distance: int = 25,
     time_filter: str = "24 hours",
     sort_by: str = "date_posted",
-    experience_levels: List[str] = None,
-    job_types: List[str] = None,
-    remote_options: List[str] = None,
-) -> tuple[str, Dict[str, str]]:
+    experience_levels: list[str] = None,
+    job_types: list[str] = None,
+    remote_options: list[str] = None,
+) -> tuple[str, dict[str, str]]:
     """
     Create an optimized LinkedIn job search URL with common settings.
 

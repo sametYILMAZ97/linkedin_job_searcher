@@ -13,13 +13,7 @@ def run_test(test_name, command):
     print(f"{'='*50}")
 
     try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            shell=True,
-            timeout=30
-        )
+        result = subprocess.run(command, capture_output=True, text=True, shell=True, timeout=30)
 
         if result.returncode == 0:
             print(f"[PASS] {test_name} PASSED")

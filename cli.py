@@ -4,12 +4,11 @@ Command Line Interface for LinkedIn Job Search URL Builder
 
 import argparse
 import sys
-from typing import List
 
 from linkedin_url_builder import LinkedInURLBuilder
 
 
-def parse_list_argument(value: str) -> List[str]:
+def parse_list_argument(value: str) -> list[str]:
     """Parse comma-separated list argument."""
     if not value:
         return []
@@ -42,9 +41,7 @@ Remote options:
     )
 
     # Required arguments
-    parser.add_argument(
-        "keywords", help='Job keywords or title (e.g., "Python Developer")'
-    )
+    parser.add_argument("keywords", help='Job keywords or title (e.g., "Python Developer")')
 
     # Optional arguments
     parser.add_argument(
@@ -62,9 +59,7 @@ Remote options:
         help="Search radius in miles (default: 25)",
     )
 
-    parser.add_argument(
-        "--time", "-t", default="24 hours", help='Time filter (default: "24 hours")'
-    )
+    parser.add_argument("--time", "-t", default="24 hours", help='Time filter (default: "24 hours")')
 
     parser.add_argument(
         "--custom-hours",
@@ -106,13 +101,9 @@ Remote options:
 
     parser.add_argument("--geo-id", help="Geographic ID for precise location targeting")
 
-    parser.add_argument(
-        "--summary", action="store_true", help="Show parameters summary"
-    )
+    parser.add_argument("--summary", action="store_true", help="Show parameters summary")
 
-    parser.add_argument(
-        "--copy", action="store_true", help="Copy URL to clipboard (requires pyperclip)"
-    )
+    parser.add_argument("--copy", action="store_true", help="Copy URL to clipboard (requires pyperclip)")
 
     parser.add_argument("--job-id", help="Specific LinkedIn job ID to reference")
 
@@ -179,9 +170,7 @@ Remote options:
                 pyperclip.copy(final_url)
                 print("\n✓ URL copied to clipboard!")
             except ImportError:
-                print(
-                    "\nNote: Install pyperclip to enable clipboard copying: pip install pyperclip"
-                )
+                print("\nNote: Install pyperclip to enable clipboard copying: pip install pyperclip")
             except Exception as e:
                 print(f"\nWarning: Could not copy to clipboard: {e}")
 

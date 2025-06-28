@@ -33,12 +33,7 @@ def test_linkedin_format():
     # Test 2: Using location by name (text-based)
     print("\n2. Testing with Location by Name:")
     builder2 = LinkedInURLBuilder()
-    url2 = (
-        builder2.set_keywords("Python Developer")
-        .set_location("ankara")
-        .set_time_filter("4 hours")
-        .build_url()
-    )
+    url2 = builder2.set_keywords("Python Developer").set_location("ankara").set_time_filter("4 hours").build_url()
     print(f"Generated: {url2}")
 
     # Should use text location parameter

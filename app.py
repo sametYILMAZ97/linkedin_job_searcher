@@ -4,18 +4,14 @@ Streamlit Web Interface for LinkedIn Job Search URL Builder
 
 import streamlit as st
 
-from linkedin_url_builder import LinkedInURLBuilder, create_optimized_url
+from linkedin_url_builder import LinkedInURLBuilder
 
 
 def main():
-    st.set_page_config(
-        page_title="LinkedIn Job Search URL Builder", page_icon="🔍", layout="wide"
-    )
+    st.set_page_config(page_title="LinkedIn Job Search URL Builder", page_icon="🔍", layout="wide")
 
     st.title("🔍 LinkedIn Job Search URL Builder")
-    st.markdown(
-        "Create optimized LinkedIn job search URLs with advanced filtering options"
-    )
+    st.markdown("Create optimized LinkedIn job search URLs with advanced filtering options")
 
     # Create two columns for better layout
     col1, col2 = st.columns([1, 1])
@@ -74,9 +70,7 @@ def main():
             geo_id = None
 
         else:  # Geographic ID
-            st.warning(
-                "⚠️ **Important**: Many pre-set geo IDs are incorrect and show wrong countries!"
-            )
+            st.warning("⚠️ **Important**: Many pre-set geo IDs are incorrect and show wrong countries!")
             st.info(
                 """
             🔍 **How to find your correct geo ID:**
@@ -108,9 +102,7 @@ def main():
 
         # Time filter
         st.subheader("⏰ Time Filter")
-        time_option = st.radio(
-            "Posted within:", options=["Preset times", "Custom hours"], horizontal=True
-        )
+        time_option = st.radio("Posted within:", options=["Preset times", "Custom hours"], horizontal=True)
 
         if time_option == "Preset times":
             time_filter = st.selectbox(
@@ -135,9 +127,7 @@ def main():
         sort_by = st.selectbox(
             "Sort by",
             options=["date_posted", "relevance"],
-            format_func=lambda x: (
-                "Most Recent" if x == "date_posted" else "Most Relevant"
-            ),
+            format_func=lambda x: ("Most Recent" if x == "date_posted" else "Most Relevant"),
             help="How to sort the search results",
         )
 
@@ -198,19 +188,13 @@ def main():
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            on_site = st.checkbox(
-                "🏢 On-site", value=True, help="Office-based positions"
-            )
+            on_site = st.checkbox("🏢 On-site", value=True, help="Office-based positions")
 
         with col2:
-            remote = st.checkbox(
-                "🏠 Remote", value=False, help="Work from home positions"
-            )
+            remote = st.checkbox("🏠 Remote", value=False, help="Work from home positions")
 
         with col3:
-            hybrid = st.checkbox(
-                "🔄 Hybrid", value=True, help="Mix of office and remote work"
-            )
+            hybrid = st.checkbox("🔄 Hybrid", value=True, help="Mix of office and remote work")
 
         # Build the remote options list based on checkboxes
         remote_options = []
@@ -306,7 +290,8 @@ def main():
 
                 # Manual copy instructions
                 st.info(
-                    "💡 **Tip**: The URL has been automatically copied to your clipboard. You can also select and copy the URL above manually."
+                    "💡 **Tip**: The URL has been automatically copied to your clipboard. "
+                    "You can also select and copy the URL above manually."
                 )
 
                 # Parameters summary
@@ -317,9 +302,7 @@ def main():
 
                 # Quick link
                 st.subheader("Quick Access")
-                st.markdown(
-                    f"[🚀 Open in LinkedIn]({final_url})", unsafe_allow_html=True
-                )
+                st.markdown(f"[🚀 Open in LinkedIn]({final_url})", unsafe_allow_html=True)
 
             except Exception as e:
                 st.error(f"Error generating URL: {str(e)}")

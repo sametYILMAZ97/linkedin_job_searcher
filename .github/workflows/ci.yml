@@ -10,54 +10,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false  # Don't cancel other jobs if one fails
+      fail-fast: false
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run comprehensive test suite
+        pip install -e ".[dev]"
+    
+    - name: Run pytest tests
       run: |
-        echo "Running test_builder.py..."
-        python test_builder.py || (echo "❌ test_builder.py failed" && exit 1)
-        echo "✅ test_builder.py passed"
-
-        echo "Running test_new_features.py..."
-        python test_new_features.py || (echo "❌ test_new_features.py failed" && exit 1)
-        echo "✅ test_new_features.py passed"
-
-        echo "Running test_linkedin_format.py..."
-        python test_linkedin_format.py || (echo "❌ test_linkedin_format.py failed" && exit 1)
-        echo "✅ test_linkedin_format.py passed"
-
-        echo "Running test_turkey_geoid.py..."
-        python test_turkey_geoid.py || (echo "❌ test_turkey_geoid.py failed" && exit 1)
-        echo "✅ test_turkey_geoid.py passed"
-
-        echo "🎉 All test files passed successfully!"
-
+        pytest -v --cov=linkedin_url_builder --cov-report=term-missing
+    
     - name: Test CLI functionality
       run: |
-        echo "Testing CLI with basic parameters..."
-        python cli.py "Test Job" --location "Test Location" --time "1 hour" --summary || (echo "❌ CLI test failed" && exit 1)
-        echo "✅ CLI test passed"
-
-    - name: Test demo functionality
-      run: |
-        echo "Testing demo script..."
-        python demo.py || (echo "❌ Demo test failed" && exit 1)
-        echo "✅ Demo test passed"
+        python cli.py "Test Job" --location "Test Location" --time "1 hour" --summary
 
   lint:
     runs-on: ubuntu-latest
@@ -69,21 +45,46 @@ jobs:
       with:
         python-version: "3.11"
 
-    - name: Install dependencies and linting tools
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install flake8 black isort
+        pip install -e ".[dev]"
 
-    - name: Run flake8 (relaxed)
+    - name: Run ruff linting
       run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --extend-ignore=E203,W503
-        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=127 --statistics
+        ruff check .
 
-    - name: Check formatting with black (non-blocking)
+    - name: Check formatting with black
       run: |
-        black --check --diff . || echo "Black formatting issues found but not blocking"
+        black --check --diff .
 
-    - name: Check import sorting with isort (non-blocking)
+    - name: Check import sorting with isort
       run: |
-        isort --check-only --diff . || echo "Import sorting issues found but not blocking"
+        isort --check-only --diff .
+
+    - name: Run type checking with mypy
+      run: |
+        mypy linkedin_url_builder.py
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit
+    
+    - name: Run safety check
+      run: |
+        safety check
+    
+    - name: Run bandit security check
+      run: |
+        bandit -r . -x tests/
