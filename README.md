@@ -1,5 +1,10 @@
 # LinkedIn Job Searcher 🔍
 
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macOS-lightgrey.svg)
+
 A powerful, comprehensive tool designed to create optimized LinkedIn job search URLs with advanced filtering options. This application automates the LinkedIn URL hacking technique to find jobs posted within precise time frames and custom search criteria.
 
 ## 🌟 Key Features
