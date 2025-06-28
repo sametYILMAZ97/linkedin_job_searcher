@@ -37,7 +37,7 @@ def test_new_features():
 
     # Test parameters summary
     summary = builder.get_params_summary()
-    print(f"\nParameters summary:")
+    print("\nParameters summary:")
     for key, value in summary.items():
         print(f"  {key}: {value}")
 

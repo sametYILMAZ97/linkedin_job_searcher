@@ -50,7 +50,7 @@ def test_basic_functionality():
             .build_url()
         )
 
-        print(f"\nTest 3 - Advanced filters:")
+        print("\nTest 3 - Advanced filters:")
         print(url3)
         print("[PASS] Advanced filters work")
 
@@ -64,7 +64,7 @@ def test_basic_functionality():
         )
 
         summary = builder4.get_params_summary()
-        print(f"\nTest 4 - Parameters summary:")
+        print("\nTest 4 - Parameters summary:")
         for key, value in summary.items():
             print(f"  {key}: {value}")
         print("[PASS] Parameters summary works")
@@ -78,7 +78,7 @@ def test_basic_functionality():
             remote_options=["remote"],
         )
 
-        print(f"\nTest 5 - Helper function:")
+        print("\nTest 5 - Helper function:")
         print(f"URL: {url5}")
         print("Summary:")
         for key, value in summary5.items():

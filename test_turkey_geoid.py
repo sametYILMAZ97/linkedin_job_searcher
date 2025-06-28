@@ -10,9 +10,6 @@ def test_turkey_geo_id():
     print("[TEST] Testing Turkey Geographic ID Mapping")
     print("=" * 50)
 
-    # Test Turkey mapping
-    builder = LinkedInURLBuilder()
-
     # Test different Turkey variations
     test_cases = ["Turkey (All)", "turkey", "Turkey", "TURKEY", "Türkiye"]
 
