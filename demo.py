@@ -7,7 +7,7 @@ from linkedin_url_builder import LinkedInURLBuilder
 
 def demo_all_features():
     """Demonstrate all LinkedIn URL Builder features including new ones."""
-    print("🚀 LinkedIn Job Searcher - Complete Feature Demo")
+    print("[DEMO] LinkedIn Job Searcher - Complete Feature Demo")
     print("=" * 60)
 
     # Test 1: Basic search with new time precision
@@ -70,10 +70,10 @@ def demo_all_features():
         print(f"   {param}: {value}")
 
     print("\n" + "=" * 60)
-    print("✅ All features demonstrated successfully!")
-    print("📱 Web interface running at: http://localhost:8502")
-    print("💻 Use CLI with: python cli.py --help for full options")
-    print("🎯 Perfect for catching fresh job postings before competition!")
+    print("[SUCCESS] All features demonstrated successfully!")
+    print("[WEB] Web interface running at: http://localhost:8502")
+    print("[CLI] Use CLI with: python cli.py --help for full options")
+    print("[TIP] Perfect for catching fresh job postings before competition!")
 
 
 if __name__ == "__main__":

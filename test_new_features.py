@@ -33,7 +33,7 @@ def test_new_features():
     assert "f_TPR=r3600" in url  # 1 hour = 3600 seconds
     assert "keywords=director%20sales%20operations" in url
 
-    print("✅ Job ID and Geo ID features work correctly!")
+    print("[SUCCESS] Job ID and Geo ID features work correctly!")
 
     # Test parameters summary
     summary = builder.get_params_summary()
@@ -41,7 +41,7 @@ def test_new_features():
     for key, value in summary.items():
         print(f"  {key}: {value}")
 
-    print("🎉 All new features tested successfully!")
+    print("[PASSED] All new features tested successfully!")
 
 
 if __name__ == "__main__":

@@ -10,34 +10,54 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false  # Don't cancel other jobs if one fails
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]  # Removed 3.8 for now
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
-
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Run basic functionality tests
+    
+    - name: Run comprehensive test suite
       run: |
-        python test_builder.py
-        python test_new_features.py
-
+        echo "Running test_builder.py..."
+        python test_builder.py || (echo "❌ test_builder.py failed" && exit 1)
+        echo "✅ test_builder.py passed"
+        
+        echo "Running test_new_features.py..."
+        python test_new_features.py || (echo "❌ test_new_features.py failed" && exit 1)
+        echo "✅ test_new_features.py passed"
+        
+        echo "Running test_linkedin_format.py..."
+        python test_linkedin_format.py || (echo "❌ test_linkedin_format.py failed" && exit 1)
+        echo "✅ test_linkedin_format.py passed"
+        
+        echo "Running test_turkey_geoid.py..."
+        python test_turkey_geoid.py || (echo "❌ test_turkey_geoid.py failed" && exit 1)
+        echo "✅ test_turkey_geoid.py passed"
+        
+        echo "🎉 All test files passed successfully!"
+    
     - name: Test CLI functionality
       run: |
-        python cli.py "Test Job" --location "Test Location" --time "1 hour" --summary
-
-    - name: Test demo functionality (allow failure)
+        echo "Testing CLI with basic parameters..."
+        python cli.py "Test Job" --location "Test Location" --time "1 hour" --summary || (echo "❌ CLI test failed" && exit 1)
+        echo "✅ CLI test passed"
+    
+    - name: Test demo functionality
       run: |
-        python demo.py || echo "Demo test failed but continuing..."
+        echo "Testing demo script..."
+        python demo.py || (echo "❌ Demo test failed" && exit 1)
+        echo "✅ Demo test passed"
 
   lint:
     runs-on: ubuntu-latest

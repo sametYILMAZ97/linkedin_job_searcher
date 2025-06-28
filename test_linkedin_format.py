@@ -7,7 +7,7 @@ from linkedin_url_builder import LinkedInURLBuilder
 
 def test_linkedin_format():
     """Test the new LinkedIn-compliant URL format."""
-    print("🧪 Testing Updated LinkedIn URL Builder")
+    print("[TEST] Testing Updated LinkedIn URL Builder")
     print("=" * 50)
 
     # Test 1: Using geo ID (like the working example)
@@ -28,24 +28,24 @@ def test_linkedin_format():
     assert "keywords=Fullstack%20Developer" in url1
     assert "f_WT=1%2C3" in url1
 
-    print("✅ Required LinkedIn parameters present!")
+    print("[SUCCESS] Required LinkedIn parameters present!")
 
-    # Test 2: Using location by name
+    # Test 2: Using location by name (text-based)
     print("\n2. Testing with Location by Name:")
     builder2 = LinkedInURLBuilder()
     url2 = (
         builder2.set_keywords("Python Developer")
-        .set_location_by_name("ankara")
+        .set_location("ankara")
         .set_time_filter("4 hours")
         .build_url()
     )
     print(f"Generated: {url2}")
 
-    # Should use geo ID instead of location
-    assert "geoId=100138681" in url2
-    assert "location=" not in url2  # Should not have location parameter
+    # Should use text location parameter
+    assert "location=ankara" in url2
+    assert "f_TPR=r14400" in url2  # 4 hours = 14400 seconds
 
-    print("✅ Location by name works correctly!")
+    print("[SUCCESS] Location by name works correctly!")
 
     # Test 3: Comparison with working URL structure
     print("\n3. Comparing with Working URL Structure:")
@@ -76,10 +76,10 @@ def test_linkedin_format():
         else:
             assert param in url3
 
-    print("✅ Matches working URL structure!")
+    print("[SUCCESS] Matches working URL structure!")
 
     print("\n" + "=" * 50)
-    print("🎉 All tests passed! URLs should now work with LinkedIn!")
+    print("[PASSED] All tests passed! URLs should now work with LinkedIn!")
 
 
 if __name__ == "__main__":

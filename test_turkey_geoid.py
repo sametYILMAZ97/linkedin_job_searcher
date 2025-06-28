@@ -7,7 +7,7 @@ from linkedin_url_builder import LinkedInURLBuilder
 
 def test_turkey_geo_id():
     """Test the Turkey geographic ID mapping."""
-    print("🇹🇷 Testing Turkey Geographic ID Mapping")
+    print("[TEST] Testing Turkey Geographic ID Mapping")
     print("=" * 50)
 
     # Test Turkey mapping
@@ -36,7 +36,7 @@ def test_turkey_geo_id():
         elif "geoId=105117694" in url:
             print("❌ Wrong geoId - this points to Sweden!")
         elif "location=" in url and "geoId=" not in url:
-            print("⚠️  Using text location instead of geoId")
+            print("[WARNING] Using text location instead of geoId")
         else:
             print("❓ No location parameter found")
 
