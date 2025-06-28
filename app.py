@@ -197,42 +197,25 @@ def main():
                 final_url = url_builder.build_url()
                 params_summary = url_builder.get_params_summary()
 
-                # Display results
-                st.success("✅ LinkedIn search URL generated successfully!")
+                # Automatically copy URL to clipboard
+                try:
+                    import pyperclip
+                    pyperclip.copy(final_url)
+                    copy_status = "✅ URL generated and copied to clipboard!"
+                except ImportError:
+                    copy_status = "✅ URL generated! (Install pyperclip for auto-copy: pip install pyperclip)"
+                except Exception:
+                    copy_status = "✅ URL generated! (Copy manually from below)"
 
-                # URL display and copy
-                st.subheader("🔗 Generated URL")
+                # Display results
+                st.success(copy_status)
+
+                # URL display
+                st.subheader("� Generated URL")
                 st.code(final_url, language=None)
 
-                # Create columns for copy button and status
-                col1, col2 = st.columns([1, 3])
-
-                with col1:
-                    # Enhanced copy button with session state
-                    if 'url_copied' not in st.session_state:
-                        st.session_state.url_copied = False
-
-                    if st.button("📋 Copy URL", key="copy_url_btn"):
-                        try:
-                            import pyperclip
-                            pyperclip.copy(final_url)
-                            st.session_state.url_copied = True
-                            st.rerun()
-                        except ImportError:
-                            st.error("⚠️ pyperclip not installed. Install with: pip install pyperclip")
-                        except Exception as e:
-                            st.error(f"⚠️ Copy failed: {str(e)}")
-
-                with col2:
-                    if st.session_state.url_copied:
-                        st.success("✅ URL copied to clipboard!")
-                        # Reset the state after showing success
-                        if st.button("🔄 Reset", key="reset_copy"):
-                            st.session_state.url_copied = False
-                            st.rerun()
-
-                # Alternative copy method
-                st.info("💡 **Alternative**: Click and drag to select the URL above, then Ctrl+C to copy")
+                # Manual copy instructions
+                st.info("💡 **Tip**: The URL has been automatically copied to your clipboard. You can also select and copy the URL above manually.")
 
                 # Parameters summary
                 if params_summary:
